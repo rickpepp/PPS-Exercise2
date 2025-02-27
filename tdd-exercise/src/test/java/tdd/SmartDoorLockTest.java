@@ -84,4 +84,18 @@ public class SmartDoorLockTest {
         doorLock.unlock(531);
         assert(doorLock.getFailedAttempts() == 1);
     }
+
+    @Test
+    public void atStartIsNotBlocked() {
+        assertFalse(doorLock.isBlocked());
+    }
+
+    @Test
+    public void canBeBlocked() {
+        doorLock.setPin(12345);
+        doorLock.lock();
+        for (int i = 0; i < doorLock.getMaxAttempts(); i++)
+            doorLock.unlock(531);
+        assertTrue(doorLock.isBlocked());
+    }
 }

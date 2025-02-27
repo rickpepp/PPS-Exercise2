@@ -1,5 +1,6 @@
 package tdd;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class SmartDoorLockImpl implements SmartDoorLock {
@@ -50,7 +51,7 @@ public class SmartDoorLockImpl implements SmartDoorLock {
 
     @Override
     public boolean isBlocked() {
-        return false;
+        return Objects.equals(failedAttempt, maxAttempt);
     }
 
     @Override
