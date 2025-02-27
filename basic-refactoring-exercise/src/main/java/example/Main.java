@@ -13,9 +13,17 @@ public class Main {
         final BankAccount bankAccount = new SimpleBankAccount(accountHolder, 0);
         bankAccount.deposit(accountHolder, 100);
         System.out.println("Current balance is " + bankAccount.getBalance());
-        bankAccount.withdraw(accountHolder, 30);
-        System.out.println("Current balance is " + bankAccount.getBalance());
-        bankAccount.withdraw(accountHolder, 80);
-        System.out.println("Current balance is " + bankAccount.getBalance());
+        tryToWithdraw(bankAccount, accountHolder, 30);
+        tryToWithdraw(bankAccount, accountHolder, 80);
+    }
+
+    private static void tryToWithdraw(final BankAccount bankAccount, final AccountHolder holder, double amount) {
+        try {
+            bankAccount.withdraw(holder, amount);
+            System.out.println("Current balance is " + bankAccount.getBalance());
+        } catch (InsufficientBudgetException | InvalidIdException e) {
+            System.out.println(e.toString());
+            System.out.println("Current balance is " + bankAccount.getBalance());
+        }
     }
 }
