@@ -49,7 +49,8 @@ class SimpleBankAccountTest {
     @Test
     void testWrongWithdraw() throws InvalidIdException {
         bankAccount.deposit(accountHolder.getId(), 100);
-        bankAccount.withdraw(2, 70);
-        assertEquals(100, bankAccount.getBalance());
+        assertThrows(InvalidIdException.class,
+                () -> bankAccount.withdraw(2, 70),
+                "Expected InvalidIdException because of different id");
     }
 }

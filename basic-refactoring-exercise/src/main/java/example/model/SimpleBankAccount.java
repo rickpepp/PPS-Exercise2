@@ -28,17 +28,21 @@ public class SimpleBankAccount implements BankAccount {
 
     @Override
     public void deposit(final int userID, final double amount) throws InvalidIdException {
-        if (checkUser(userID)) {
-            this.balance += amount;
-        } else {
-            throw new InvalidIdException();
-        }
+        checkUser(userID);
+        this.balance += amount;
     }
 
     @Override
-    public void withdraw(final int userID, final double amount) {
-        if (checkUser(userID) && isWithdrawAllowed(amount)) {
+    public void withdraw(final int userID, final double amount) throws InvalidIdException {
+        checkUser(userID);
+        if (isWithdrawAllowed(amount)) {
             this.balance -= amount;
+        }
+    }
+
+    private void checkUser(int userID) throws InvalidIdException {
+        if (!isIDValid(userID)) {
+            throw new InvalidIdException();
         }
     }
 
@@ -46,7 +50,8 @@ public class SimpleBankAccount implements BankAccount {
         return this.balance >= amount;
     }
 
-    private boolean checkUser(final int id) {
+    private boolean isIDValid(final int id) {
         return this.holder.getId() == id;
     }
+
 }

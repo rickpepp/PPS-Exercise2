@@ -35,5 +35,5 @@ public interface BankAccount {
      * @param userID the id of the user that wants do the withdrawal
      * @param amount the amount of the withdrawal
      */
-    void withdraw(int userID, double amount);
+    void withdraw(int userID, double amount) throws InvalidIdException;
 }
