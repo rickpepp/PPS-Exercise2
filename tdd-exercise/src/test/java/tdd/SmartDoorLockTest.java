@@ -51,4 +51,10 @@ public class SmartDoorLockTest {
                 "Can't be locked if the pin is not set");
     }
 
+    @Test
+    public void canBeSetMaxAttempt() {
+        SmartDoorLock doorLock1 = new SmartDoorLockImpl(1);
+        assert(doorLock1.getMaxAttempts() == 1);
+    }
+
 }
