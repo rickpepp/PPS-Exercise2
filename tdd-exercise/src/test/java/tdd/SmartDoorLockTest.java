@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SmartDoorLockTest {
 
@@ -22,6 +23,7 @@ public class SmartDoorLockTest {
 
     @Test
     public void canBeLocked() {
+        doorLock.setPin(12345);
         doorLock.lock();
         assertTrue(doorLock.isLocked());
     }
@@ -40,6 +42,13 @@ public class SmartDoorLockTest {
         doorLock.lock();
         doorLock.unlock(531);
         assertTrue(doorLock.isLocked());
+    }
+
+    @Test
+    public void cantBeLockedIfPinNotSet() {
+        assertThrows(IllegalStateException.class,
+                () -> doorLock.lock(),
+                "Can't be locked if the pin is not set");
     }
 
 }
