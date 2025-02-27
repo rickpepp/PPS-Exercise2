@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * The test suite for testing the CircularList implementation
@@ -20,6 +20,18 @@ public class CircularListTest {
     @Test
     public void isEmptyAtStart() {
         assertTrue(circularQueue.isEmpty());
+    }
+
+    @Test
+    public void isSizeEqualZero() {
+        assertEquals(0, circularQueue.size());
+    }
+
+    @Test
+    public void cantDequeueEmptyQueue() {
+        assertThrows(IllegalStateException.class,
+                () -> circularQueue.dequeue(),
+                "Can't dequeue from empty queue");
     }
 
 }

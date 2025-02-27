@@ -14,6 +14,9 @@ package tdd;
  *   - Refactor
  */
 public interface CircularQueue {
-
+    
     boolean isEmpty();
+    int size();
+
+    void dequeue();
 }
