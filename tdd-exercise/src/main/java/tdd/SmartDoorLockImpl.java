@@ -4,17 +4,21 @@ import java.util.Optional;
 
 public class SmartDoorLockImpl implements SmartDoorLock {
 
+    private static final Integer MAX_ATTEMPT_DEFAULT = 3;
+
     private boolean locked = false;
     private Optional<Integer> pin;
-    private Integer maxAttempt;
+    private final Integer maxAttempt;
 
     public SmartDoorLockImpl(int maxAttempt) {
         pin = Optional.empty();
+        if (maxAttempt <= 0)
+            throw new IllegalArgumentException("Max Attempt must be greater than 0");
         this.maxAttempt = maxAttempt;
     }
 
     public SmartDoorLockImpl() {
-        this(3);
+        this(MAX_ATTEMPT_DEFAULT);
     }
 
     @Override

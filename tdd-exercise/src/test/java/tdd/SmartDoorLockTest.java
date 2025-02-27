@@ -57,4 +57,18 @@ public class SmartDoorLockTest {
         assert(doorLock1.getMaxAttempts() == 1);
     }
 
+    @Test
+    public void cantBeSetMaxAttemptEqualZero() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new SmartDoorLockImpl(0),
+                "Max Attempt must be greater than 0");
+
+    }
+
+    @Test
+    public void cantBeSetMaxAttemptMinorZero() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new SmartDoorLockImpl(-1),
+                "Max Attempt must be greater than 0");
+    }
 }
