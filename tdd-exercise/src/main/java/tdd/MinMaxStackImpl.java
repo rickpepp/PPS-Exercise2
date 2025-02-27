@@ -1,37 +1,46 @@
 package tdd;
 
+import java.util.PriorityQueue;
 import java.util.Stack;
 
 public class MinMaxStackImpl implements MinMaxStack{
 
     private Stack<Integer> internalStack;
+    private PriorityQueue<Integer> internalMinHeap;
 
     public MinMaxStackImpl() {
         internalStack = new Stack<>();
+        internalMinHeap = new PriorityQueue<>();
     }
 
     @Override
     public void push(int value) {
         internalStack.push(value);
+        internalMinHeap.add(value);
     }
 
     @Override
     public int pop() {
-        if (isEmpty())
-            throw new IllegalStateException("Can't pop empty stack");
+        CheckEmptyStack("Can't pop empty stack");
+        internalMinHeap.remove(internalStack.peek());
         return internalStack.pop();
     }
 
     @Override
     public int peek() {
-        if (isEmpty())
-            throw new IllegalStateException("Can't peek empty stack");
+        CheckEmptyStack("Can't peek empty stack");
         return internalStack.peek();
     }
 
     @Override
     public int getMin() {
-        throw new IllegalStateException("Can't getMin from an empty stack");
+        CheckEmptyStack("Can't getMin from an empty stack");
+        return internalMinHeap.remove();
+    }
+
+    private void CheckEmptyStack(String s) {
+        if (isEmpty())
+            throw new IllegalStateException(s);
     }
 
     @Override

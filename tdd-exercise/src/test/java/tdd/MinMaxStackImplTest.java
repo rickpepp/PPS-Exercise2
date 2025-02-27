@@ -9,6 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MinMaxStackImplTest {
 
+    private static final int[] ARRAY_TO_TEST = {1, 5, 7, 3, 1, 6, 3, 2};
+
     private MinMaxStack stack;
 
     @BeforeEach
@@ -87,14 +89,22 @@ class MinMaxStackImplTest {
 
     @Test
     public void pushAndPopMultipleValue() {
-        int[] values = {1, 5, 7, 3, 1, 6, 3, 2};
+        initializeStack(ARRAY_TO_TEST);
+        for (int i = ARRAY_TO_TEST.length - 1; i >= 0; i--) {
+            assert(stack.pop() == ARRAY_TO_TEST[i]);
+        }
+    }
 
+    private void initializeStack(int[] values) {
         for (int value : values) {
             stack.push(value);
         }
-
-        for (int i = values.length - 1; i >= 0; i--) {
-            assert(stack.pop() == values[i]);
-        }
     }
+
+    @Test
+    public void getMinFromStack() {
+        initializeStack(ARRAY_TO_TEST);
+        assert(stack.getMin() == 1);
+    }
+
 }
