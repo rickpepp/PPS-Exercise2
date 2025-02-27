@@ -136,4 +136,41 @@ public class SmartDoorLockTest {
         doorLock.unlock(CORRECT_PIN);
         assertTrue(doorLock.isLocked());
     }
+
+    @Test
+    public void checkOpenStateAfterReset() {
+        setDoorInBlockingState();
+        doorLock.reset();
+        assertFalse(doorLock.isLocked());
+    }
+
+    @Test
+    public void checkOpenStateAfterResetNoBlockingState() {
+        doorLock.setPin(CORRECT_PIN);
+        doorLock.reset();
+        assertFalse(doorLock.isLocked());
+    }
+
+    @Test
+    public void checkFailedAttemptsAfterReset() {
+        setDoorInBlockingState();
+        doorLock.reset();
+        assert(doorLock.getFailedAttempts() == 0);
+    }
+
+    @Test
+    public void checkNoBlockingStateAfterReset() {
+        setDoorInBlockingState();
+        doorLock.reset();
+        assertFalse(doorLock.isBlocked());
+    }
+
+    @Test
+    public void checkNoPINAfterReset() {
+        setDoorInBlockingState();
+        doorLock.reset();
+        assertThrows(IllegalStateException.class,
+                () -> doorLock.lock(),
+                "Can't be locked if the pin is not set");
+    }
 }

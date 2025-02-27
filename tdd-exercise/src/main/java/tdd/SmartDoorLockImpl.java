@@ -35,9 +35,11 @@ public class SmartDoorLockImpl implements SmartDoorLock {
 
     @Override
     public void unlock(int pin) {
-        if (!isBlocked() && this.pin.isPresent() && this.pin.get() == pin)
+        if (isBlocked())
+            return;
+        if (this.pin.isPresent() && this.pin.get() == pin)
             locked = false;
-        else if (!isBlocked())
+        else
             failedAttempt++;
     }
 
@@ -70,6 +72,8 @@ public class SmartDoorLockImpl implements SmartDoorLock {
 
     @Override
     public void reset() {
-
+        locked = false;
+        failedAttempt = 0;
+        pin = Optional.empty();
     }
 }
