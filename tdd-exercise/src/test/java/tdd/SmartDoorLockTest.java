@@ -129,4 +129,11 @@ public class SmartDoorLockTest {
                 () -> doorLock.setPin(INVALID_PIN_LENGTH),
                 "PIN must be of 4 digits");
     }
+
+    @Test
+    public void cantBeUnlockedIfBlocked() {
+        setDoorInBlockingState();
+        doorLock.unlock(CORRECT_PIN);
+        assertTrue(doorLock.isLocked());
+    }
 }
