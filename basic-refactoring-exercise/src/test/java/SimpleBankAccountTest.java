@@ -1,3 +1,4 @@
+import example.exception.InvalidIdException;
 import example.model.AccountHolder;
 import example.model.BankAccount;
 import example.model.SimpleBankAccount;
@@ -25,27 +26,28 @@ class SimpleBankAccountTest {
     }
 
     @Test
-    void testDeposit() {
+    void testDeposit() throws InvalidIdException {
         bankAccount.deposit(accountHolder.getId(), 100);
         assertEquals(100, bankAccount.getBalance());
     }
 
     @Test
-    void testWrongDeposit() {
+    void testWrongDeposit() throws InvalidIdException {
         bankAccount.deposit(accountHolder.getId(), 100);
-        bankAccount.deposit(2, 50);
-        assertEquals(100, bankAccount.getBalance());
+        assertThrows(InvalidIdException.class,
+                () -> bankAccount.deposit(2, 50),
+                "Expected InvalidIdException because of different id");
     }
 
     @Test
-    void testWithdraw() {
+    void testWithdraw() throws InvalidIdException {
         bankAccount.deposit(accountHolder.getId(), 100);
         bankAccount.withdraw(accountHolder.getId(), 70);
         assertEquals(30, bankAccount.getBalance());
     }
 
     @Test
-    void testWrongWithdraw() {
+    void testWrongWithdraw() throws InvalidIdException {
         bankAccount.deposit(accountHolder.getId(), 100);
         bankAccount.withdraw(2, 70);
         assertEquals(100, bankAccount.getBalance());

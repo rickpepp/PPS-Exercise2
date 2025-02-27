@@ -1,5 +1,7 @@
 package example.model;
 
+import example.exception.InvalidIdException;
+
 /**
  * This class represent a particular instance of a BankAccount.
  * In particular, a Simple Bank Account allows always the deposit
@@ -25,9 +27,11 @@ public class SimpleBankAccount implements BankAccount {
     }
 
     @Override
-    public void deposit(final int userID, final double amount) {
+    public void deposit(final int userID, final double amount) throws InvalidIdException {
         if (checkUser(userID)) {
             this.balance += amount;
+        } else {
+            throw new InvalidIdException();
         }
     }
 

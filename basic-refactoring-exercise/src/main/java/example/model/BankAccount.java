@@ -1,5 +1,7 @@
 package example.model;
 
+import example.exception.InvalidIdException;
+
 /**
  * This interface defines the concept of a very basic bank account.
  */
@@ -24,7 +26,7 @@ public interface BankAccount {
      * @param userID the id of the user that wants do the deposit
      * @param amount the amount of the deposit
      */
-    void deposit(int userID, double amount);
+    void deposit(int userID, double amount) throws InvalidIdException;
 
     /**
      * Allows the withdrawal of an amount from the account, if the given userID corresponds to the register holder ID
