@@ -10,6 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class SmartDoorLockTest {
 
     private SmartDoorLock doorLock;
+    private static final int CORRECT_PIN = 12345;
+    private static final int INCORRECT_PIN = 531;
 
     @BeforeEach
     public void init() {
@@ -23,24 +25,24 @@ public class SmartDoorLockTest {
 
     @Test
     public void canBeLocked() {
-        doorLock.setPin(12345);
+        doorLock.setPin(CORRECT_PIN);
         doorLock.lock();
         assertTrue(doorLock.isLocked());
     }
 
     @Test
     public void canBeUnlockedAndSetPin() {
-        doorLock.setPin(12345);
+        doorLock.setPin(CORRECT_PIN);
         doorLock.lock();
-        doorLock.unlock(12345);
+        doorLock.unlock(CORRECT_PIN);
         assertFalse(doorLock.isLocked());
     }
 
     @Test
     public void cantBeUnlockedWithoutRightPin() {
-        doorLock.setPin(12345);
+        doorLock.setPin(CORRECT_PIN);
         doorLock.lock();
-        doorLock.unlock(531);
+        doorLock.unlock(INCORRECT_PIN);
         assertTrue(doorLock.isLocked());
     }
 
@@ -79,9 +81,9 @@ public class SmartDoorLockTest {
 
     @Test
     public void countFailedAttempt() {
-        doorLock.setPin(12345);
+        doorLock.setPin(CORRECT_PIN);
         doorLock.lock();
-        doorLock.unlock(531);
+        doorLock.unlock(INCORRECT_PIN);
         assert(doorLock.getFailedAttempts() == 1);
     }
 
@@ -92,10 +94,21 @@ public class SmartDoorLockTest {
 
     @Test
     public void canBeBlocked() {
-        doorLock.setPin(12345);
+        doorLock.setPin(CORRECT_PIN);
         doorLock.lock();
         for (int i = 0; i < doorLock.getMaxAttempts(); i++)
-            doorLock.unlock(531);
+            doorLock.unlock(INCORRECT_PIN);
         assertTrue(doorLock.isBlocked());
+    }
+
+    @Test
+    public void cantBeSetPinInBlockingState() {
+        doorLock.setPin(CORRECT_PIN);
+        doorLock.lock();
+        for (int i = 0; i < doorLock.getMaxAttempts(); i++)
+            doorLock.unlock(INCORRECT_PIN);
+        assertThrows(IllegalStateException.class,
+                () -> doorLock.setPin(INCORRECT_PIN),
+                "Can't be set pin in blocking state");
     }
 }
