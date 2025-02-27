@@ -28,8 +28,8 @@ public class SimpleBankAccount implements BankAccount {
     }
 
     @Override
-    public void deposit(final int userID, final double amount) throws InvalidIdException {
-        checkUser(userID);
+    public void deposit(final AccountHolder holder, final double amount) throws InvalidIdException {
+        checkUser(holder.getId());
         this.balance += amount;
     }
 

@@ -28,28 +28,28 @@ class SimpleBankAccountTest {
 
     @Test
     void testDeposit() throws InvalidIdException {
-        bankAccount.deposit(accountHolder.getId(), 100);
+        bankAccount.deposit(accountHolder, 100);
         assertEquals(100, bankAccount.getBalance());
     }
 
     @Test
     void testWrongIDDeposit() throws InvalidIdException {
-        bankAccount.deposit(accountHolder.getId(), 100);
+        bankAccount.deposit(accountHolder, 100);
         assertThrows(InvalidIdException.class,
-                () -> bankAccount.deposit(2, 50),
+                () -> bankAccount.deposit(new AccountHolder("Ciao", "Ciao", 2), 50),
                 "Expected InvalidIdException because of different id");
     }
 
     @Test
     void testWithdraw() throws InvalidIdException, InsufficientBudgetException {
-        bankAccount.deposit(accountHolder.getId(), 100);
+        bankAccount.deposit(accountHolder, 100);
         bankAccount.withdraw(accountHolder.getId(), 70);
         assertEquals(30, bankAccount.getBalance());
     }
 
     @Test
     void testWrongIDWithdraw() throws InvalidIdException {
-        bankAccount.deposit(accountHolder.getId(), 100);
+        bankAccount.deposit(accountHolder, 100);
         assertThrows(InvalidIdException.class,
                 () -> bankAccount.withdraw(2, 70),
                 "Expected InvalidIdException because of different id");
@@ -57,7 +57,7 @@ class SimpleBankAccountTest {
 
     @Test
     void testInsufficientBudgetWithdraw() throws InvalidIdException {
-        bankAccount.deposit(accountHolder.getId(), 100);
+        bankAccount.deposit(accountHolder, 100);
         assertThrows(InsufficientBudgetException.class,
                 () -> bankAccount.withdraw(accountHolder.getId(), 120),
                 "Asked 120 with budget 100, expected InsufficientBudgetException");
@@ -65,7 +65,7 @@ class SimpleBankAccountTest {
 
     @Test
     void testInsufficientBudgetWithdrawHandled() throws InvalidIdException {
-        bankAccount.deposit(accountHolder.getId(), 100);
+        bankAccount.deposit(accountHolder, 100);
         try {
             bankAccount.withdraw(accountHolder.getId(), 120);
         } catch (InsufficientBudgetException e) {
