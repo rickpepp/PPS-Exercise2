@@ -107,4 +107,35 @@ class MinMaxStackImplTest {
         assert(stack.getMin() == 1);
     }
 
+    @Test
+    public void getMinFromStackWithoutRemoveOrChangeNothing() {
+        initializeStack(ARRAY_TO_TEST);
+        stack.getMin();
+        for (int i = ARRAY_TO_TEST.length - 1; i >= 0; i--) {
+            assert(stack.pop() == ARRAY_TO_TEST[i]);
+        }
+    }
+
+    @Test
+    public void getMaxFromStack() {
+        initializeStack(ARRAY_TO_TEST);
+        assert(stack.getMax() == 7);
+    }
+
+    @Test
+    public void mixOfFunction() {
+        initializeStack(ARRAY_TO_TEST);
+        assert(stack.getMax() == 7);
+        assert(stack.getMax() == 7);
+        assert(stack.getMin() == 1);
+        assert(stack.getMin() == 1);
+        for (int i = 0; i < 6; i++) {
+            stack.pop();
+        }
+        assertEquals(5, stack.getMax());
+        stack.push(-1);
+        assertEquals(-1, stack.getMin());
+        assertEquals(3, stack.size());
+    }
+
 }

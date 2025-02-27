@@ -1,28 +1,34 @@
 package tdd;
 
+import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Stack;
 
 public class MinMaxStackImpl implements MinMaxStack{
 
-    private Stack<Integer> internalStack;
-    private PriorityQueue<Integer> internalMinHeap;
+    private final Stack<Integer> internalStack;
+    private final PriorityQueue<Integer> internalMinHeap;
+    private final PriorityQueue<Integer> internalMaxHeap;
 
     public MinMaxStackImpl() {
         internalStack = new Stack<>();
         internalMinHeap = new PriorityQueue<>();
+        internalMaxHeap = new PriorityQueue<>(Comparator.reverseOrder());
     }
 
     @Override
     public void push(int value) {
         internalStack.push(value);
         internalMinHeap.add(value);
+        internalMaxHeap.add(value);
     }
 
     @Override
     public int pop() {
         CheckEmptyStack("Can't pop empty stack");
-        internalMinHeap.remove(internalStack.peek());
+        int elementToPop = internalStack.peek();
+        internalMinHeap.remove(elementToPop);
+        internalMaxHeap.remove(elementToPop);
         return internalStack.pop();
     }
 
@@ -35,7 +41,8 @@ public class MinMaxStackImpl implements MinMaxStack{
     @Override
     public int getMin() {
         CheckEmptyStack("Can't getMin from an empty stack");
-        return internalMinHeap.remove();
+        CheckEmptyHeap(internalMinHeap, "Internal Min Heap is empty");
+        return internalMinHeap.peek();
     }
 
     private void CheckEmptyStack(String s) {
@@ -45,7 +52,14 @@ public class MinMaxStackImpl implements MinMaxStack{
 
     @Override
     public int getMax() {
-        throw new IllegalStateException("Can't getMax from an empty stack");
+        CheckEmptyStack("Can't getMax from an empty stack");
+        CheckEmptyHeap(internalMaxHeap, "Internal Max Heap is empty");
+        return internalMaxHeap.peek();
+    }
+
+    private void CheckEmptyHeap(PriorityQueue<Integer> internalHeap, String message) {
+        if (internalHeap.isEmpty())
+            throw new IllegalStateException(message);
     }
 
     @Override
