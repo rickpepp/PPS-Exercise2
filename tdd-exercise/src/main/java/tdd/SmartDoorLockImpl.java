@@ -11,7 +11,7 @@ public class SmartDoorLockImpl implements SmartDoorLock {
 
     @Override
     public void unlock(int pin) {
-
+        locked = false;
     }
 
     @Override
