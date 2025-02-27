@@ -32,7 +32,7 @@ class SimpleBankAccountTest {
     }
 
     @Test
-    void testWrongDeposit() throws InvalidIdException {
+    void testWrongIDDeposit() throws InvalidIdException {
         bankAccount.deposit(accountHolder.getId(), 100);
         assertThrows(InvalidIdException.class,
                 () -> bankAccount.deposit(2, 50),
@@ -47,7 +47,7 @@ class SimpleBankAccountTest {
     }
 
     @Test
-    void testWrongWithdraw() throws InvalidIdException {
+    void testWrongIDWithdraw() throws InvalidIdException {
         bankAccount.deposit(accountHolder.getId(), 100);
         assertThrows(InvalidIdException.class,
                 () -> bankAccount.withdraw(2, 70),
