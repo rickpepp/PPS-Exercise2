@@ -65,4 +65,23 @@ class MinMaxStackImplTest {
         stack.push(0);
         assert(stack.pop() == 0);
     }
+
+    @Test
+    public void isNotEmptyAfterPush() {
+        stack.push(0);
+        assertFalse(stack.isEmpty());
+    }
+
+    @Test
+    public void pushAndPeekValue() {
+        stack.push(0);
+        assert(stack.peek() == 0);
+    }
+
+    @Test
+    public void checkPeekNotDeleteNothing() {
+        stack.push(0);
+        stack.peek();
+        assert(stack.pop() == 0);
+    }
 }
