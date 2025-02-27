@@ -28,6 +28,8 @@ public class SmartDoorLockImpl implements SmartDoorLock {
     public void setPin(int pin) {
         if (isBlocked() || isLocked())
             throw new IllegalStateException("Can't be set pin in blocking state");
+        if (pin < 1000 || pin > 9999)
+            throw new IllegalArgumentException("PIN must be of 4 digits");
         this.pin = Optional.of(pin);
     }
 

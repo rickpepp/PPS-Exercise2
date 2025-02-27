@@ -10,8 +10,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class SmartDoorLockTest {
 
     private SmartDoorLock doorLock;
-    private static final int CORRECT_PIN = 12345;
-    private static final int INCORRECT_PIN = 531;
+    private static final int CORRECT_PIN = 1345;
+    private static final int INCORRECT_PIN = 5331;
+    private static final int INVALID_PIN_LENGTH = 24234;
 
     @BeforeEach
     public void init() {
@@ -94,19 +95,20 @@ public class SmartDoorLockTest {
 
     @Test
     public void canBeBlocked() {
+        setDoorInBlockingState();
+        assertTrue(doorLock.isBlocked());
+    }
+
+    private void setDoorInBlockingState() {
         doorLock.setPin(CORRECT_PIN);
         doorLock.lock();
         for (int i = 0; i < doorLock.getMaxAttempts(); i++)
             doorLock.unlock(INCORRECT_PIN);
-        assertTrue(doorLock.isBlocked());
     }
 
     @Test
     public void cantBeSetPinInBlockingState() {
-        doorLock.setPin(CORRECT_PIN);
-        doorLock.lock();
-        for (int i = 0; i < doorLock.getMaxAttempts(); i++)
-            doorLock.unlock(INCORRECT_PIN);
+        setDoorInBlockingState();
         assertThrows(IllegalStateException.class,
                 () -> doorLock.setPin(INCORRECT_PIN),
                 "Can't be set pin in blocking state");
@@ -119,5 +121,12 @@ public class SmartDoorLockTest {
         assertThrows(IllegalStateException.class,
                 () -> doorLock.setPin(INCORRECT_PIN),
                 "Can't be set pin in blocking state");
+    }
+
+    @Test
+    public void pinCantBeSetIfLengthDifferentFrom4Digit() {
+        assertThrows(IllegalArgumentException.class,
+                () -> doorLock.setPin(INVALID_PIN_LENGTH),
+                "PIN must be of 4 digits");
     }
 }
