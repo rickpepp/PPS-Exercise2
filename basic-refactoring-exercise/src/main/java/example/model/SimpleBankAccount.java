@@ -34,8 +34,8 @@ public class SimpleBankAccount implements BankAccount {
     }
 
     @Override
-    public void withdraw(final int userID, final double amount) throws InvalidIdException, InsufficientBudgetException {
-        checkUser(userID);
+    public void withdraw(final AccountHolder holder, final double amount) throws InvalidIdException, InsufficientBudgetException {
+        checkUser(holder.getId());
         checkBudgetIsSufficient(amount);
         this.balance -= amount;
     }

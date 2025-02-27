@@ -13,11 +13,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class SimpleBankAccountTest {
 
     private AccountHolder accountHolder;
+    private AccountHolder falseAccountHolder;
     private BankAccount bankAccount;
 
     @BeforeEach
     void beforeEach(){
         accountHolder = new AccountHolder("Mario", "Rossi", 1);
+        falseAccountHolder = new AccountHolder("Ciao", "Ciao", 2);
         bankAccount = new SimpleBankAccount(accountHolder, 0);
     }
 
@@ -36,14 +38,14 @@ class SimpleBankAccountTest {
     void testWrongIDDeposit() throws InvalidIdException {
         bankAccount.deposit(accountHolder, 100);
         assertThrows(InvalidIdException.class,
-                () -> bankAccount.deposit(new AccountHolder("Ciao", "Ciao", 2), 50),
+                () -> bankAccount.deposit(falseAccountHolder, 50),
                 "Expected InvalidIdException because of different id");
     }
 
     @Test
     void testWithdraw() throws InvalidIdException, InsufficientBudgetException {
         bankAccount.deposit(accountHolder, 100);
-        bankAccount.withdraw(accountHolder.getId(), 70);
+        bankAccount.withdraw(accountHolder, 70);
         assertEquals(30, bankAccount.getBalance());
     }
 
@@ -51,7 +53,7 @@ class SimpleBankAccountTest {
     void testWrongIDWithdraw() throws InvalidIdException {
         bankAccount.deposit(accountHolder, 100);
         assertThrows(InvalidIdException.class,
-                () -> bankAccount.withdraw(2, 70),
+                () -> bankAccount.withdraw(falseAccountHolder, 70),
                 "Expected InvalidIdException because of different id");
     }
 
@@ -59,7 +61,7 @@ class SimpleBankAccountTest {
     void testInsufficientBudgetWithdraw() throws InvalidIdException {
         bankAccount.deposit(accountHolder, 100);
         assertThrows(InsufficientBudgetException.class,
-                () -> bankAccount.withdraw(accountHolder.getId(), 120),
+                () -> bankAccount.withdraw(accountHolder, 120),
                 "Asked 120 with budget 100, expected InsufficientBudgetException");
     }
 
@@ -67,7 +69,7 @@ class SimpleBankAccountTest {
     void testInsufficientBudgetWithdrawHandled() throws InvalidIdException {
         bankAccount.deposit(accountHolder, 100);
         try {
-            bankAccount.withdraw(accountHolder.getId(), 120);
+            bankAccount.withdraw(accountHolder, 120);
         } catch (InsufficientBudgetException e) {
             assertEquals(100, bankAccount.getBalance());
         }

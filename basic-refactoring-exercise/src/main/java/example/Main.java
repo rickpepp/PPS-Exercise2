@@ -13,9 +13,9 @@ public class Main {
         final BankAccount bankAccount = new SimpleBankAccount(accountHolder, 0);
         bankAccount.deposit(accountHolder, 100);
         System.out.println("Current balance is " + bankAccount.getBalance());
-        bankAccount.withdraw(accountHolder.getId(), 30);
+        bankAccount.withdraw(accountHolder, 30);
         System.out.println("Current balance is " + bankAccount.getBalance());
-        bankAccount.withdraw(accountHolder.getId(), 80);
+        bankAccount.withdraw(accountHolder, 80);
         System.out.println("Current balance is " + bankAccount.getBalance());
     }
 }

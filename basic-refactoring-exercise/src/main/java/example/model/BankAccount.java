@@ -24,7 +24,7 @@ public interface BankAccount {
      * Allows the deposit of an amount on the account, if the given userID corresponds to the register holder ID
      * of the bank account. This ID acts like an "identification token" .
      *
-     * @param holder the id of the user that wants do the deposit
+     * @param holder the user that wants do the deposit
      * @param amount the amount of the deposit
      */
     void deposit(final AccountHolder holder, double amount) throws InvalidIdException;
@@ -33,8 +33,8 @@ public interface BankAccount {
      * Allows the withdrawal of an amount from the account, if the given userID corresponds to the register holder ID
      * of the bank account. This ID acts like an "identification token" .
      *
-     * @param userID the id of the user that wants do the withdrawal
+     * @param holder the user that wants do the withdrawal
      * @param amount the amount of the withdrawal
      */
-    void withdraw(int userID, double amount) throws InvalidIdException, InsufficientBudgetException;
+    void withdraw(final AccountHolder holder, double amount) throws InvalidIdException, InsufficientBudgetException;
 }
