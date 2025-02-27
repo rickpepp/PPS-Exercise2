@@ -48,4 +48,15 @@ class MinMaxStackImplTest {
                 () -> stack.getMax(),
                 "Get Max empty stack must return IllegalStateException");
     }
+
+    @Test
+    public void sizeEmptyStack() {
+        assert(stack.size() == 0);
+    }
+
+    @Test
+    public void canPushStack() {
+        stack.push(0);
+        assert(stack.size() == 1);
+    }
 }
