@@ -111,4 +111,13 @@ public class SmartDoorLockTest {
                 () -> doorLock.setPin(INCORRECT_PIN),
                 "Can't be set pin in blocking state");
     }
+
+    @Test
+    public void cantBeSetPinInLockingState() {
+        doorLock.setPin(CORRECT_PIN);
+        doorLock.lock();
+        assertThrows(IllegalStateException.class,
+                () -> doorLock.setPin(INCORRECT_PIN),
+                "Can't be set pin in blocking state");
+    }
 }

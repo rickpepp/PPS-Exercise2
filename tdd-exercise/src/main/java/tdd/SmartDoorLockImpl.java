@@ -26,7 +26,7 @@ public class SmartDoorLockImpl implements SmartDoorLock {
 
     @Override
     public void setPin(int pin) {
-        if (isBlocked())
+        if (isBlocked() || isLocked())
             throw new IllegalStateException("Can't be set pin in blocking state");
         this.pin = Optional.of(pin);
     }
