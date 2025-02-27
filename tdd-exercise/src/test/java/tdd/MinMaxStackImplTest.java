@@ -34,4 +34,18 @@ class MinMaxStackImplTest {
                 () -> stack.peek(),
                 "Peek empty stack must return IllegalStateException");
     }
+
+    @Test
+    public void getMinEmptyStack() {
+        assertThrows(IllegalStateException.class,
+                () -> stack.getMin(),
+                "Get Min empty stack must return IllegalStateException");
+    }
+
+    @Test
+    public void getMaxEmptyStack() {
+        assertThrows(IllegalStateException.class,
+                () -> stack.getMax(),
+                "Get Max empty stack must return IllegalStateException");
+    }
 }

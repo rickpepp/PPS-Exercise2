@@ -18,12 +18,12 @@ public class MinMaxStackImpl implements MinMaxStack{
 
     @Override
     public int getMin() {
-        return 0;
+        throw new IllegalStateException("Can't getMin from an empty stack");
     }
 
     @Override
     public int getMax() {
-        return 0;
+        throw new IllegalStateException("Can't getMax from an empty stack");
     }
 
     @Override
