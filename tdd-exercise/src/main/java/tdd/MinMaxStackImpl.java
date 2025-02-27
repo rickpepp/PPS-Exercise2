@@ -1,17 +1,25 @@
 package tdd;
 
+import java.util.Stack;
+
 public class MinMaxStackImpl implements MinMaxStack{
 
-    private int size = 0;
+    private Stack<Integer> internalStack;
+
+    public MinMaxStackImpl() {
+        internalStack = new Stack<>();
+    }
 
     @Override
     public void push(int value) {
-        size++;
+        internalStack.push(value);
     }
 
     @Override
     public int pop() {
-        throw new IllegalStateException("Can't pop empty stack");
+        if (isEmpty())
+            throw new IllegalStateException("Can't pop empty stack");
+        return internalStack.pop();
     }
 
     @Override
@@ -31,11 +39,11 @@ public class MinMaxStackImpl implements MinMaxStack{
 
     @Override
     public boolean isEmpty() {
-        return true;
+        return internalStack.isEmpty();
     }
 
     @Override
     public int size() {
-        return size;
+        return internalStack.size();
     }
 }

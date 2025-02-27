@@ -59,4 +59,10 @@ class MinMaxStackImplTest {
         stack.push(0);
         assert(stack.size() == 1);
     }
+
+    @Test
+    public void pushAndPopValue() {
+        stack.push(0);
+        assert(stack.pop() == 0);
+    }
 }
