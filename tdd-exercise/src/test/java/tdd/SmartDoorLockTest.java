@@ -71,4 +71,17 @@ public class SmartDoorLockTest {
                 () -> new SmartDoorLockImpl(-1),
                 "Max Attempt must be greater than 0");
     }
+
+    @Test
+    public void startNoFailedAttempt() {
+        assert(doorLock.getFailedAttempts() == 0);
+    }
+
+    @Test
+    public void countFailedAttempt() {
+        doorLock.setPin(12345);
+        doorLock.lock();
+        doorLock.unlock(531);
+        assert(doorLock.getFailedAttempts() == 1);
+    }
 }

@@ -9,12 +9,14 @@ public class SmartDoorLockImpl implements SmartDoorLock {
     private boolean locked = false;
     private Optional<Integer> pin;
     private final Integer maxAttempt;
+    private Integer failedAttempt;
 
     public SmartDoorLockImpl(int maxAttempt) {
         pin = Optional.empty();
         if (maxAttempt <= 0)
             throw new IllegalArgumentException("Max Attempt must be greater than 0");
         this.maxAttempt = maxAttempt;
+        failedAttempt = 0;
     }
 
     public SmartDoorLockImpl() {
@@ -30,6 +32,8 @@ public class SmartDoorLockImpl implements SmartDoorLock {
     public void unlock(int pin) {
         if (this.pin.isPresent() && this.pin.get() == pin)
             locked = false;
+        else
+            failedAttempt++;
     }
 
     @Override
@@ -56,7 +60,7 @@ public class SmartDoorLockImpl implements SmartDoorLock {
 
     @Override
     public int getFailedAttempts() {
-        return 0;
+        return failedAttempt;
     }
 
     @Override
