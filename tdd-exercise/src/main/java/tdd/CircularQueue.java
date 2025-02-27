@@ -19,4 +19,6 @@ public interface CircularQueue {
     int size();
 
     void dequeue();
+
+    void peek();
 }

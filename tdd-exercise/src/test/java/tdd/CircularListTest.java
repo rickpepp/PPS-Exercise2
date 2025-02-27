@@ -34,4 +34,11 @@ public class CircularListTest {
                 "Can't dequeue from empty queue");
     }
 
+    @Test
+    public void cantPeekEmptyQueue() {
+        assertThrows(IllegalStateException.class,
+                () -> circularQueue.peek(),
+                "Can't peek from empty queue");
+    }
+
 }
