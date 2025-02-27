@@ -62,4 +62,15 @@ class SimpleBankAccountTest {
                 () -> bankAccount.withdraw(accountHolder.getId(), 120),
                 "Asked 120 with budget 100, expected InsufficientBudgetException");
     }
+
+    @Test
+    void testInsufficientBudgetWithdrawHandled() throws InvalidIdException {
+        bankAccount.deposit(accountHolder.getId(), 100);
+        try {
+            bankAccount.withdraw(accountHolder.getId(), 120);
+        } catch (InsufficientBudgetException e) {
+            assertEquals(100, bankAccount.getBalance());
+        }
+        assertEquals(100, bankAccount.getBalance());
+    }
 }
