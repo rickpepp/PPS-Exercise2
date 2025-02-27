@@ -1,3 +1,4 @@
+import example.exception.InsufficientBudgetException;
 import example.exception.InvalidIdException;
 import example.model.AccountHolder;
 import example.model.BankAccount;
@@ -40,7 +41,7 @@ class SimpleBankAccountTest {
     }
 
     @Test
-    void testWithdraw() throws InvalidIdException {
+    void testWithdraw() throws InvalidIdException, InsufficientBudgetException {
         bankAccount.deposit(accountHolder.getId(), 100);
         bankAccount.withdraw(accountHolder.getId(), 70);
         assertEquals(30, bankAccount.getBalance());
@@ -52,5 +53,13 @@ class SimpleBankAccountTest {
         assertThrows(InvalidIdException.class,
                 () -> bankAccount.withdraw(2, 70),
                 "Expected InvalidIdException because of different id");
+    }
+
+    @Test
+    void testInsufficientBudgetWithdraw() throws InvalidIdException {
+        bankAccount.deposit(accountHolder.getId(), 100);
+        assertThrows(InsufficientBudgetException.class,
+                () -> bankAccount.withdraw(accountHolder.getId(), 120),
+                "Asked 120 with budget 100, expected InsufficientBudgetException");
     }
 }

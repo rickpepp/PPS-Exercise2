@@ -1,5 +1,6 @@
 package example.model;
 
+import example.exception.InsufficientBudgetException;
 import example.exception.InvalidIdException;
 
 /**
@@ -35,5 +36,5 @@ public interface BankAccount {
      * @param userID the id of the user that wants do the withdrawal
      * @param amount the amount of the withdrawal
      */
-    void withdraw(int userID, double amount) throws InvalidIdException;
+    void withdraw(int userID, double amount) throws InvalidIdException, InsufficientBudgetException;
 }

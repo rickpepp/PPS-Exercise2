@@ -1,5 +1,6 @@
 package example.model;
 
+import example.exception.InsufficientBudgetException;
 import example.exception.InvalidIdException;
 
 /**
@@ -33,10 +34,15 @@ public class SimpleBankAccount implements BankAccount {
     }
 
     @Override
-    public void withdraw(final int userID, final double amount) throws InvalidIdException {
+    public void withdraw(final int userID, final double amount) throws InvalidIdException, InsufficientBudgetException {
         checkUser(userID);
-        if (isWithdrawAllowed(amount)) {
-            this.balance -= amount;
+        checkBudgetIsSufficient(amount);
+        this.balance -= amount;
+    }
+
+    private void checkBudgetIsSufficient(final double amount) throws InsufficientBudgetException {
+        if (!isWithdrawAllowed(amount)) {
+            throw new InsufficientBudgetException();
         }
     }
 
