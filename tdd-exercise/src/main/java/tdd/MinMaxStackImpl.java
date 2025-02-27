@@ -8,12 +8,12 @@ public class MinMaxStackImpl implements MinMaxStack{
 
     @Override
     public int pop() {
-        return 0;
+        throw new IllegalStateException("Can't pop empty stack");
     }
 
     @Override
     public int peek() {
-        return 0;
+        throw new IllegalStateException("Can't peek empty stack");
     }
 
     @Override
