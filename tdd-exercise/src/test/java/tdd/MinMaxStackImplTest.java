@@ -84,4 +84,17 @@ class MinMaxStackImplTest {
         stack.peek();
         assert(stack.pop() == 0);
     }
+
+    @Test
+    public void pushAndPopMultipleValue() {
+        int[] values = {1, 5, 7, 3, 1, 6, 3, 2};
+
+        for (int value : values) {
+            stack.push(value);
+        }
+
+        for (int i = values.length - 1; i >= 0; i--) {
+            assert(stack.pop() == values[i]);
+        }
+    }
 }
