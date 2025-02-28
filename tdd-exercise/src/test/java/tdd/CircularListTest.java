@@ -1,6 +1,5 @@
 package tdd;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,11 +9,13 @@ import static org.junit.jupiter.api.Assertions.*;
  * The test suite for testing the CircularList implementation
  */
 public class CircularListTest {
-    private CircularQueue circularQueue;
+    public static final int SINGLE_VALUE_TO_ENQUEUE = 5;
+    public static final int CIRCULAR_QUEUE_SIZE = 5;
+    private CircularQueue<Integer> circularQueue;
 
     @BeforeEach
     public void init() {
-        circularQueue = new CircularQueueImpl(5);
+        circularQueue = new CircularQueueImpl<Integer>(CIRCULAR_QUEUE_SIZE);
     }
 
     @Test
@@ -39,6 +40,38 @@ public class CircularListTest {
         assertThrows(IllegalStateException.class,
                 () -> circularQueue.peek(),
                 "Can't peek from empty queue");
+    }
+
+    @Test
+    public void canEnqueueAndDequeue() {
+        circularQueue.enqueue(SINGLE_VALUE_TO_ENQUEUE);
+        assertEquals(SINGLE_VALUE_TO_ENQUEUE, circularQueue.dequeue());
+    }
+
+    @Test
+    public void dequeueRemoveElement() {
+        circularQueue.enqueue(SINGLE_VALUE_TO_ENQUEUE);
+        circularQueue.dequeue();
+        assertTrue(circularQueue.isEmpty());
+    }
+
+    @Test
+    public void enqueueIncreaseQueueSize() {
+        circularQueue.enqueue(SINGLE_VALUE_TO_ENQUEUE);
+        assertEquals(1, circularQueue.size());
+    }
+
+    @Test
+    public void dequeueDecreaseQueueSize() {
+        circularQueue.enqueue(SINGLE_VALUE_TO_ENQUEUE);
+        circularQueue.dequeue();
+        assertEquals(0, circularQueue.size());
+    }
+
+    @Test
+    public void canPeekElement() {
+        circularQueue.enqueue(SINGLE_VALUE_TO_ENQUEUE);
+        assertEquals(SINGLE_VALUE_TO_ENQUEUE, circularQueue.peek());
     }
 
 }
