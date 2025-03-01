@@ -14,10 +14,35 @@ package tdd;
  *   - Refactor
  */
 public interface CircularQueue<T> {
-    
+
+    /**
+     * Check if the circular queue is empty
+     * @return true if the circular queue is empty, false otherwise.
+     */
     boolean isEmpty();
+
+    /**
+     * Gets the number of elements currently in the circular queue.
+     * @return The size of the queue
+     */
     int size();
-    T dequeue();
-    T peek();
+
+    /**
+     * Add value to the end of the queue, if the queue is full, overwrite the oldest element
+     * @param value The T value to add at the end of the queue
+     */
     void enqueue(T value);
+
+    /**
+     * Return and remove the oldest element in the queue
+     * @return The oldest element of the queue
+     */
+    T dequeue();
+
+    /**
+     * Return the oldest element in the queue
+     * @return The oldest element of the queue
+     */
+    T peek();
+
 }
