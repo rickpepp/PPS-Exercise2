@@ -1,10 +1,11 @@
 package tdd;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Stack;
 
-public class MinMaxStackImpl implements MinMaxStack{
+public class MinMaxStackImpl implements MinMaxStack {
 
     private final Stack<Integer> internalStack;
     private final PriorityQueue<Integer> internalMinHeap;
@@ -25,7 +26,7 @@ public class MinMaxStackImpl implements MinMaxStack{
 
     @Override
     public int pop() {
-        CheckEmptyStack("Can't pop empty stack");
+        checkEmptyCollection(this.internalStack, "Stack");
         int elementToPop = internalStack.peek();
         internalMinHeap.remove(elementToPop);
         internalMaxHeap.remove(elementToPop);
@@ -34,32 +35,27 @@ public class MinMaxStackImpl implements MinMaxStack{
 
     @Override
     public int peek() {
-        CheckEmptyStack("Can't peek empty stack");
+        checkEmptyCollection(this.internalStack, "Stack");
         return internalStack.peek();
     }
 
     @Override
     public int getMin() {
-        CheckEmptyStack("Can't getMin from an empty stack");
-        CheckEmptyHeap(internalMinHeap, "Internal Min Heap is empty");
+        checkEmptyCollection(this.internalStack, "Stack");
+        checkEmptyCollection(this.internalMaxHeap, "MinHeap");
         return internalMinHeap.peek();
-    }
-
-    private void CheckEmptyStack(String s) {
-        if (isEmpty())
-            throw new IllegalStateException(s);
     }
 
     @Override
     public int getMax() {
-        CheckEmptyStack("Can't getMax from an empty stack");
-        CheckEmptyHeap(internalMaxHeap, "Internal Max Heap is empty");
+        checkEmptyCollection(this.internalStack, "Stack");
+        checkEmptyCollection(this.internalMaxHeap, "MaxHeap");
         return internalMaxHeap.peek();
     }
 
-    private void CheckEmptyHeap(PriorityQueue<Integer> internalHeap, String message) {
-        if (internalHeap.isEmpty())
-            throw new IllegalStateException(message);
+    private <T> void checkEmptyCollection(Collection<T> collection, String objectName) {
+        if (collection.isEmpty())
+            throw new IllegalStateException(objectName + " is empty, invalid operation");
     }
 
     @Override
