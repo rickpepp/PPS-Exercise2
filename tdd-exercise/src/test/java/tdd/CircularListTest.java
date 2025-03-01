@@ -74,4 +74,44 @@ public class CircularListTest {
         assertEquals(SINGLE_VALUE_TO_ENQUEUE, circularQueue.peek());
     }
 
+    @Test
+    public void peekElementCantChangeQueueSize() {
+        circularQueue.enqueue(SINGLE_VALUE_TO_ENQUEUE);
+        assertEquals(1, circularQueue.size());
+    }
+
+    @Test
+    public void canEnqueueAndDequeueMultipleElement() {
+        int[] elements = {5, 10, 7, 2, 32};
+        initializeEnqueue(elements);
+        checkEnqueueValues(elements);
+    }
+
+    private void checkEnqueueValues(int[] elements) {
+        for (int i = 0; i < CIRCULAR_QUEUE_SIZE; i++) {
+            assertEquals(elements[i], circularQueue.dequeue());
+        }
+    }
+
+    private void initializeEnqueue(int[] elements) {
+        for (int element: elements) {
+            circularQueue.enqueue(element);
+        }
+    }
+
+    @Test
+    public void circularEnqueueFunctionality() {
+        int[] elements = {5, 10, 7, 2, 32, 100};
+        int[] elementsExpected = {10, 7, 2, 32, 100};
+        initializeEnqueue(elements);
+        checkEnqueueValues(elementsExpected);
+    }
+
+    @Test
+    public void maxSizeIsRespected() {
+        int[] elements = {5, 10, 7, 2, 32, 100};
+        initializeEnqueue(elements);
+        assertEquals(CIRCULAR_QUEUE_SIZE, circularQueue.size());
+    }
+
 }
